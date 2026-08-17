@@ -1,0 +1,51 @@
+---
+title: 'Mastering React Performance in 2026'
+description: 'Practical techniques to keep your React apps fast — from memoization to concurrent rendering.'
+date: '2026-06-12'
+tags: ['React', 'Performance']
+cover: '/projects/nova-dashboard.svg'
+---
+
+Performance is a feature. Users notice jank before they notice your gradient
+backgrounds. Here are the techniques I reach for on every production app.
+
+## 1. Measure before you optimize
+
+Don't guess — profile. React DevTools' Profiler tab and Chrome's Performance
+panel will tell you exactly which components re-render and why.
+
+## 2. Memoize with intention
+
+```tsx
+const ExpensiveList = memo(function ExpensiveList({
+  items,
+}: {
+  items: Item[];
+}) {
+  return (
+    <ul>
+      {items.map((item) => (
+        <li key={item.id}>{item.label}</li>
+      ))}
+    </ul>
+  );
+});
+```
+
+`memo`, `useMemo`, and `useCallback` are not free — they trade CPU for memory
+and add complexity. Reach for them only when a profiler shows a real problem.
+
+## 3. Virtualize long lists
+
+Rendering 10,000 DOM nodes will always be slow. Libraries like
+`@tanstack/react-virtual` render only what's visible in the viewport.
+
+## 4. Let the compiler help
+
+The React Compiler automatically memoizes components, removing a huge class
+of manual `useMemo`/`useCallback` bugs. Enable it and delete the boilerplate.
+
+## Takeaway
+
+Performance work is iterative: measure, fix the biggest bottleneck, and
+measure again. Chasing micro-optimizations before profiling wastes time.

@@ -1,26 +1,97 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+/* Enable class-based dark mode toggling (driven by next-themes) */
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf7;
+  --foreground: #0a0a0f;
+  --surface: #ffffff;
+  --surface-muted: #f0f0eb;
+  --border-strong: #0a0a0f;
+  --accent: #a3e635;
+  --accent-foreground: #0a0a0f;
+  --accent-2: #7c5cff;
+  --accent-2-foreground: #ffffff;
+  --shadow-color: 10 10 15;
+}
+
+.dark {
+  --background: #0a0a0f;
+  --foreground: #f5f5f0;
+  --surface: #131318;
+  --surface-muted: #1b1b22;
+  --border-strong: #f5f5f0;
+  --accent: #c4f82a;
+  --accent-foreground: #0a0a0f;
+  --accent-2: #9b8bff;
+  --accent-2-foreground: #0a0a0f;
+  --shadow-color: 196 248 42;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-2: var(--accent-2);
+  --color-accent-2-foreground: var(--accent-2-foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-display: var(--font-space-grotesk);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  /* Neo-brutalist hard-offset shadow, used on cards, buttons & badges */
+  .shadow-brutal {
+    box-shadow: 6px 6px 0 0 rgb(var(--shadow-color));
+  }
+  .shadow-brutal-sm {
+    box-shadow: 4px 4px 0 0 rgb(var(--shadow-color));
+  }
+  .shadow-brutal-lg {
+    box-shadow: 10px 10px 0 0 rgb(var(--shadow-color));
+  }
+  .shadow-brutal-hover {
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .shadow-brutal-hover:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 0 rgb(var(--shadow-color));
+  }
+  .shadow-brutal-hover:active {
+    transform: translate(0, 0);
+    box-shadow: 3px 3px 0 0 rgb(var(--shadow-color));
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in srgb, var(--foreground) 8%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--foreground) 8%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 44px 44px;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
 }

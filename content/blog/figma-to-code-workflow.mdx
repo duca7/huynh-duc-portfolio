@@ -1,0 +1,45 @@
+---
+title: 'A Practical Figma-to-Code Workflow'
+description: 'How I turn Figma designs into pixel-perfect, responsive React components without the guesswork.'
+date: '2026-04-02'
+tags: ['Design', 'Workflow', 'Tailwind']
+cover: '/projects/pulse-design-system.svg'
+---
+
+Translating a design file into responsive markup is a skill on its own. Here's
+the workflow that gets me from Figma to a shipped component fast.
+
+## 1. Extract design tokens first
+
+Before writing a single component, pull colors, spacing, radii and type scale
+into your Tailwind theme (`@theme` in Tailwind v4). This keeps every
+component consistent by default.
+
+```css
+@theme inline {
+  --color-accent: #c4f82a;
+  --font-display: var(--font-space-grotesk);
+}
+```
+
+## 2. Build the smallest atoms first
+
+Buttons, badges, inputs — get these exactly right before assembling sections.
+It's much cheaper to fix a spacing bug in a Button than in fifty places that
+use it.
+
+## 3. Match breakpoints, not pixels
+
+Figma frames are usually one fixed width. Your job is to interpolate the
+_intent_ of the design across breakpoints, not to hard-code the exact pixel
+values from one frame.
+
+## 4. Sanity-check with overlay comparisons
+
+Take a screenshot of your build and overlay it on the Figma export at 50%
+opacity. Any drift in spacing or type jumps out immediately.
+
+## Takeaway
+
+A repeatable workflow beats pixel-hunting every time — tokens first, atoms
+second, composition third.

@@ -1,0 +1,48 @@
+---
+title: 'TypeScript Tips That Level Up Your React Code'
+description: 'Small TypeScript patterns that make your React components safer and easier to refactor.'
+date: '2026-02-18'
+tags: ['TypeScript', 'React']
+cover: '/projects/sprint-planner.svg'
+---
+
+TypeScript pays off the most in the places React developers touch every day:
+props, hooks, and event handlers.
+
+## Discriminated unions for variant props
+
+```tsx
+type ButtonAsButton = {
+  href?: undefined;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+type ButtonAsLink = { href: string };
+
+function Button(props: ButtonAsButton | ButtonAsLink) {
+  // TypeScript narrows correctly based on the presence of `href`
+}
+```
+
+This avoids optional-prop soup and impossible states like passing both
+`onClick` and `href` semantics that don't make sense together.
+
+## Type your hooks' return values explicitly
+
+Inference is great until a hook's return type accidentally changes shape.
+Pin down the return type of shared hooks so consumers get a stable contract.
+
+## Prefer `satisfies` over casting
+
+```ts
+const config = {
+  theme: 'dark',
+  accent: '#c4f82a',
+} satisfies ThemeConfig;
+```
+
+`satisfies` validates the shape _and_ keeps the literal types — better than
+`as ThemeConfig`, which silences real errors.
+
+## Takeaway
+
+Good types are a design tool: they make invalid states unrepresentable and
+turn runtime bugs into compile-time errors.
